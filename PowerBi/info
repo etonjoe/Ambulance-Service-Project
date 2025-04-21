@@ -1,0 +1,73 @@
+Steps to Create the Power BI Dashboard
+Step 1: Install Power BI Desktop
+Download and install Power BI Desktop from the official Microsoft Power BI site.
+
+Step 2: Connect to Your SQL Server Database
+Open Power BI Desktop.
+
+Click on Home > Get Data > SQL Server.
+
+Enter your Server Name and Database Name to connect to your SQL Server.
+
+Choose the tables related to the ambulance service (e.g., Ambulances, Patients, EmergencyCalls, Dispatches).
+
+Step 3: Data Transformation
+Once the data is loaded, click Transform Data to open the Power Query Editor.
+
+Clean the data:
+
+Remove unnecessary columns.
+
+Format columns to their appropriate data types (e.g., dates, numbers).
+
+Create calculated columns such as ResponseTime = ArrivalTime - DispatchTime if needed.
+
+Step 4: Create Calculated Measures Using DAX
+In the Modeling tab, create the following calculated measures:
+
+Available Ambulances:
+
+DAX
+Copy
+AvailableAmbulances = COUNTROWS(FILTER(Ambulances, Ambulances[Status] = "Available"))
+Average Response Time:
+
+DAX
+Copy
+AverageResponseTime = AVERAGEX(Dispatches, DATEDIFF(Dispatches[DispatchTime], Dispatches[ArrivalTime], MINUTE))
+Call Severity Distribution:
+
+DAX
+Copy
+CallsBySeverity = COUNTROWS(EmergencyCalls)
+Incident Resolution Time:
+
+DAX
+Copy
+IncidentResolutionTime = AVERAGEX(Incidents, DATEDIFF(Incidents[IncidentTime], Incidents[ResolvedTime], HOUR))
+Step 5: Design Your Dashboard
+Add KPI Visuals:
+
+Use Card visuals to show key metrics like the number of available ambulances, average response time, etc.
+
+Bar/Column charts can be used to display emergency calls by severity, average response time by ambulance, etc.
+
+Use a Line chart to show trends over time (e.g., response times over the past 30 days).
+
+Add a Date Filter:
+
+Use a Slicer to allow users to filter the dashboard by time (e.g., last 30 days, last 6 months).
+
+Conditional Formatting:
+
+Apply conditional formatting on key metrics like response time to visually highlight anomalies (e.g., response times above a certain threshold in red).
+
+Step 6: Publish the Report
+Once the dashboard is ready, save the Power BI report file with a .pbix extension.
+
+Click Publish in Power BI Desktop to upload the report to Power BI Service for sharing and collaboration.
+
+Step 7: Set up Data Refresh
+If you're using live or regularly updated data:
+
+Set up automatic data refresh in Power BI Service to ensure that the dashboard is always up to date.
